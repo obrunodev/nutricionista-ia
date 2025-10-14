@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Detalhes: {{ patient.name }}{% endblock title %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <h1 class="mb-3 text-primary">Detalhes do Paciente</h1>
+        <h2 class="h4 mb-4 text-info">{{ patient.name }}</h2>
+
+        <div class="card shadow-sm p-4">
+            <dl class="row mb-0">
+                <dt class="col-sm-4">Usuário Relacionado:</dt>
+                <dd class="col-sm-8">{{ patient.user.email }}</dd>
+
+                <dt class="col-sm-4">Nº Documento:</dt>
+                <dd class="col-sm-8">{{ patient.document }}</dd>
+
+                <dt class="col-sm-4">Data de Nascimento:</dt>
+                <dd class="col-sm-8">{{ patient.birth_date|date:"d/m/Y" }}</dd>
+
+                <dt class="col-sm-4">Sexo:</dt>
+                <dd class="col-sm-8"><span class="badge text-bg-info">{{ patient.get_gender_display }}</span></dd>
+            </dl>
+        </div>
+
+        <div class="d-flex justify-content-start gap-2 mt-4">
+            <a href="{% url 'patients:list' %}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left me-1"></i> Voltar à Lista
+            </a>
+            <a href="{% url 'patients:update' patient.pk %}" class="btn btn-warning">
+                <i class="fas fa-edit me-1"></i> Editar
+            </a>
+            <a href="{% url 'patients:delete' patient.pk %}" class="btn btn-danger">
+                <i class="fas fa-trash me-1"></i> Excluir
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock content %}

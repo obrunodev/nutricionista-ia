@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {% if object %}
+        Editar: {{ object.name }}
+    {% else %}
+        Novo Paciente
+    {% endif %}
+{% endblock title %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <h1 class="mb-4 text-primary">
+            {% if object %}
+                Editar Paciente: <span class="text-info">{{ object.name }}</span>
+            {% else %}
+                Cadastrar Novo Paciente
+            {% endif %}
+        </h1>
+        
+        <div class="card shadow-sm p-4">
+            <form method="post">
+                {% csrf_token %}
+
+                {% for field in form %}
+                    <div class="mb-3">
+                        <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                        {{ field }}
+                        
+                        {% if field.help_text %}
+                            <div class="form-text">{{ field.help_text }}</div>
+                        {% endif %}
+                        
+                        {% if field.errors %}
+                            <div class="alert alert-danger p-1 mt-1 small">
+                                {{ field.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+
+                <div class="d-flex justify-content-end gap-2 mt-4">
+                    <a href="{% url 'patients:list' %}" class="btn btn-secondary">Cancelar</a>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save me-1"></i>
+                        Salvar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}
